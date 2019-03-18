@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+.back {
+	background:#010203;
+	margin: auto;
+	padding: 5px;
+}
+.empty{
+	margin-top: 30px;
+	height:300px;
+}
+.buttom{
+	margin-top: 20px;
+	width:100%;
+	align-self: center;
+}
+
+
+
+/**/
+.mine_nav{
+	background-color:#140F0F
+	
+}
+
+/*以下是database页面的样式*/
+#search_nav{
+	margin-top:5px;
+	
+}
