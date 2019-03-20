@@ -5,6 +5,7 @@ import pymongo
 import json
 import os
 import time
+import pymatgen as mg
 def database(request):
     myclient = pymongo.MongoClient("mongodb://localhost:27017")
     mydb = myclient["materials"]
@@ -30,6 +31,7 @@ def select(request):
         for each in my_col_materials.find():
             if each["sites"][0]["label"] == name:
                 selected.append(each)
+        
         return HttpResponse(json.dumps(selected))
 
 def upload(request):
@@ -40,8 +42,27 @@ def uploaded(request):
         myFile = request.FILES.get("myfile", None)  # 获取上传的文件，如果没有文件，则默认为None
         if not myFile:
             return HttpResponse("no files for upload!")
+        namepath = os.path.join(r"E:\Pycharm\models\myfile", myFile.name + str(time.time()))
         destination = open(os.path.join(r"E:\Pycharm\models\myfile", myFile.name + str(time.time())), 'wb+')  # 打开特定的文件进行二进制的写操作
         for chunk in myFile.chunks():  # 分块写入文件
             destination.write(chunk)
         destination.close()
+        myclient = pymongo.MongoClient("mongodb://localhost:27017")
+        mydb = myclient["materials"]
+        mycol = mydb["Structure"]
+        structure = mg.Structure.from_file(namepath)
+        print("已存入一条数据")
+        mycol.insert_one(structure.as_dict())
+        myclient.close()
         return HttpResponse("upload over!")
+
+def query(request):
+    myclient = pymongo.MongoClient("mongodb://localhost:27017")
+    mydb = myclient["materials"]
+    my_col_materials = mydb["PureElements"]
+    selected = []
+    for each in my_col_materials.find():
+        if each["sites"][0]["label"] == name:
+            selected.append(each)
+    myclient.close()
+    return HttpResponse(json.dumps(selected))

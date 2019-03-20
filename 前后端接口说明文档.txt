@@ -1,0 +1,9 @@
+一、查询功能
+    1.跳转的url应该是 “database/query”
+    2.python代码接收request对象，传输方式可以参考materialsdemo/database/static/database/mine_js.js(可以优化)
+    3.查询结果返回一个json，将需要的值取出填入前端即可
+二、文件上传功能
+    1.将文件存储到本地，并且写入数据库
+三、显示功能
+    1.脚本编写
+    2.需要传输什么数据，可以画图
