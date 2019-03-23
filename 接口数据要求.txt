@@ -1,0 +1,6 @@
+一、数据库页面（http://matcloud.cnic.cn/search）
+    1.点击detail的时候，需要将LatticeParameters与元素名一起传入进来，后台以如下形式接受
+        例：name = request.POST.get("element_name")
+        变量分别用"element_name"和"latticeparameters"
+    2.返回时以如下形式返回
+        例：return render(request, "database.html", {"pure_list": pure_list})

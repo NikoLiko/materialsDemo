@@ -57,6 +57,7 @@ def uploaded(request):
         return HttpResponse("upload over!")
 
 def query(request):
+    name = request.POST.get("element_name")
     myclient = pymongo.MongoClient("mongodb://localhost:27017")
     mydb = myclient["materials"]
     my_col_materials = mydb["PureElements"]
@@ -66,3 +67,24 @@ def query(request):
             selected.append(each)
     myclient.close()
     return HttpResponse(json.dumps(selected))
+
+#返回struct页面需要的数据
+def struct(request):
+    if request.is_ajax():
+        name = request.POST.get("element_name")
+        latticeparameters = request.POST.get("latticeparameters")
+        latticeparameters = latticeparameters.split(",")
+        myclient = pymongo.MongoClient("mongodb://localhost:27017")
+        mydb = myclient["materials"]
+        my_col_materials = mydb["PureElements"]
+        select = []
+        for each in my_col_materials.find():
+            if each["sites"][0]["label"] == name:
+                select.append(each)
+        for each in select:
+            if each["lattice"]["a"] == float(latticeparameters[0]) and each["lattice"]["b"] == float(latticeparameters[1]) and each["lattice"]["c"] == float(latticeparameters[2]):
+                selected = each
+        # structure = mg.Structure.from_dict(selected)
+        # space_group = structure.get_space_group_info()
+        myclient.close()
+        return render(request,"structure.html",{"element_name":name,"latticeparameters":selected})
