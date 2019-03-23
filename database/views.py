@@ -84,7 +84,7 @@ def struct(request):
         for each in select:
             if each["lattice"]["a"] == float(latticeparameters[0]) and each["lattice"]["b"] == float(latticeparameters[1]) and each["lattice"]["c"] == float(latticeparameters[2]):
                 selected = each
-        # structure = mg.Structure.from_dict(selected)
-        # space_group = structure.get_space_group_info()
+        structure = mg.Structure.from_dict(selected)
+        space_group = structure.get_space_group_info()
         myclient.close()
-        return render(request,"structure.html",{"element_name":name,"latticeparameters":selected})
+        return render(request,"structure.html",{"element_name":name,"latticeparameters":selected,"space_group":space_group})
