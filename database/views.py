@@ -98,18 +98,21 @@ def struct(request):
 def sites(request):
     if request.is_ajax():
         name = request.POST.get("element_name")
-        # myclient = pymongo.MongoClient("mongodb://45.76.29.47:27017")
+        latticeparameters = request.POST.get("latticeparameters")
+        latticeparameters = latticeparameters.split(",")
         myclient = pymongo.MongoClient("mongodb://localhost:27017")
         mydb = myclient["materials"]
         my_col_materials = mydb["PureElements"]
-        selected = []
+        select = []
         for each in my_col_materials.find():
             if each["sites"][0]["label"] == name:
-                selected.append(each)
-        myclient.close()
-        one  = selected[0]
-        structure = mg.Structure.from_dict(one)
-        space_info = structure.get_space_group_info()
-        selected.append(space_info)
-        return HttpResponse(json.dumps(selected))
+                select.append(each)
+        for each in select:
+            if each["lattice"]["a"] == float(latticeparameters[0]) and each["lattice"]["b"] == float(latticeparameters[1]) and each["lattice"]["c"] == float(latticeparameters[2]):
+                selected = each
+        sites = []
+        for i in selected["sites"]:
+            sites.append(i["abc"])
+            sites.append(i["xyz"])
+        return HttpResponse(json.dumps(sites))
 

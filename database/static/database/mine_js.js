@@ -33,16 +33,16 @@ function post_name(obj){
     tbody[0].innerHTML="";
     $('#title').html(obj1[3][0]);
     $(obj1).each(function(index){
-    var val = obj1[index];
-    var tr=$("<tr></tr>");
-    tr.append("<td>" + (index + 1) + "</td>");
-    var str = val["lattice"]["a"] + "," + val["lattice"]["b"] + "," + val["lattice"]["c"] + "," + val["lattice"]["alpha"] + "," + val["lattice"]["beta"] + "," + val["lattice"]["gamma"]
-    latticeparameters = str
-    tr.append("<td>" + str +"</td>");
-    tr.append("<td>" + obj1[3][1] +"</td>");
-    tr.append("<td>" + "cubic" +"</td>");
-    tr.append("<td><buttom onclick='post_info()'><span class='glyphicon glyphicon-chevron-right'></span></buttom></td>");
-    tbody.append(tr);
+        var val = obj1[index];
+        var tr=$("<tr></tr>");
+        tr.append("<td>" + (index + 1) + "</td>");
+        var str = val["lattice"]["a"] + "," + val["lattice"]["b"] + "," + val["lattice"]["c"] + "," + val["lattice"]["alpha"] + "," + val["lattice"]["beta"] + "," + val["lattice"]["gamma"]
+        latticeparameters = str
+        tr.append("<td>" + str +"</td>");
+        tr.append("<td>" + obj1[3][1] +"</td>");
+        tr.append("<td>" + "cubic" +"</td>");
+        tr.append("<td><buttom onclick='post_info()'><span class='glyphicon glyphicon-chevron-right'></span></buttom></td>");
+        tbody.append(tr);
     });
 
     $('#info').replaceWith(tbody);
@@ -51,9 +51,11 @@ function post_name(obj){
 }
 
 function post_info(){
-    $.post("detail/", {"element_name":name1,"latticeparameters":latticeparameters},function(str_response){
-        var obj = window.open("about:blank");   
-        obj.document.write(str_response)
+    $.post("sites/", {"element_name":name1,"latticeparameters":latticeparameters},function(str_response){
+        // var obj = window.open("about:blank");   
+        // obj.document.write(str_response)
+        var sites = eval(str_response);
+        alert(sites);
     });
 }        
 		
