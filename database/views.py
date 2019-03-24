@@ -31,7 +31,11 @@ def select(request):
         for each in my_col_materials.find():
             if each["sites"][0]["label"] == name:
                 selected.append(each)
-        
+        myclient.close()
+        one  = selected[0]
+        structure = mg.Structure.from_dict(one)
+        space_info = structure.get_space_group_info()
+        selected.append(space_info)
         return HttpResponse(json.dumps(selected))
 
 def upload(request):
@@ -57,16 +61,18 @@ def uploaded(request):
         return HttpResponse("upload over!")
 
 def query(request):
-    name = request.POST.get("element_name")
-    myclient = pymongo.MongoClient("mongodb://localhost:27017")
-    mydb = myclient["materials"]
-    my_col_materials = mydb["PureElements"]
-    selected = []
-    for each in my_col_materials.find():
-        if each["sites"][0]["label"] == name:
-            selected.append(each)
-    myclient.close()
-    return HttpResponse(json.dumps(selected))
+    if request.is_ajax():
+        name = request.POST.get("element_name")
+        myclient = pymongo.MongoClient("mongodb://localhost:27017")
+        mydb = myclient["materials"]
+        my_col_materials = mydb["PureElements"]
+        selected = []
+        for each in my_col_materials.find():
+            if each["sites"][0]["label"] == name:
+                selected.append(each)
+        myclient.close()
+        
+        return HttpResponse(json.dumps(selected))
 
 #返回struct页面需要的数据
 def struct(request):

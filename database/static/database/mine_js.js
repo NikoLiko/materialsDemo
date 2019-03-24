@@ -38,9 +38,8 @@ function post_name(obj){
     var str = val["lattice"]["a"] + "," + val["lattice"]["b"] + "," + val["lattice"]["c"] + "," + val["lattice"]["alpha"] + "," + val["lattice"]["beta"] + "," + val["lattice"]["gamma"]
     latticeparameters = str
     tr.append("<td>" + str +"</td>");
-    tr.append("<td>" + 225 +"</td>");
+    tr.append("<td>" + obj1[3][1] +"</td>");
     tr.append("<td>" + "cubic" +"</td>");
-    // tr.append("<td><a href = ' "+obj1[0].sites[0].label+"&latticeparameters="+str+"'><span class='glyphicon glyphicon-chevron-right'></span></ a></td>");
     tr.append("<td><buttom onclick='post_info()'><span class='glyphicon glyphicon-chevron-right'></span></buttom></td>");
     tbody.append(tr);
     });
