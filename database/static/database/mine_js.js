@@ -31,6 +31,7 @@ function post_name(obj){
     var obj1 = eval(data);
     var tbody = $('#info');
     tbody[0].innerHTML="";
+    $('#title').html(obj1[3][0]);
     $(obj1).each(function(index){
     var val = obj1[index];
     var tr=$("<tr></tr>");
@@ -43,6 +44,7 @@ function post_name(obj){
     tr.append("<td><buttom onclick='post_info()'><span class='glyphicon glyphicon-chevron-right'></span></buttom></td>");
     tbody.append(tr);
     });
+
     $('#info').replaceWith(tbody);
     });
     

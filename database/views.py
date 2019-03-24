@@ -93,4 +93,23 @@ def struct(request):
         structure = mg.Structure.from_dict(selected)
         space_group = structure.get_space_group_info()
         myclient.close()
-        return render(request,"structure.html",{"element_name":name,"latticeparameters":selected,"space_group":space_group})
+        return render(request,"structure.html",{"element_name":name,"latticeparameters":selected,"space_group":space_group,"id":selected['_id'],'len':len(selected['sites']),'space_group1':space_group[1],'space_group2':space_group[0],'la1':selected['lattice']['a'],'la2':selected['lattice']['b'],'la3':selected['lattice']['c'],'la4':selected['lattice']['alpha'],'la5':selected['lattice']['beta'],'la6':selected['lattice']['gamma']})
+
+def sites(request):
+    if request.is_ajax():
+        name = request.POST.get("element_name")
+        # myclient = pymongo.MongoClient("mongodb://45.76.29.47:27017")
+        myclient = pymongo.MongoClient("mongodb://localhost:27017")
+        mydb = myclient["materials"]
+        my_col_materials = mydb["PureElements"]
+        selected = []
+        for each in my_col_materials.find():
+            if each["sites"][0]["label"] == name:
+                selected.append(each)
+        myclient.close()
+        one  = selected[0]
+        structure = mg.Structure.from_dict(one)
+        space_info = structure.get_space_group_info()
+        selected.append(space_info)
+        return HttpResponse(json.dumps(selected))
+

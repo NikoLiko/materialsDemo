@@ -7,5 +7,7 @@ urlpatterns = [
     path('query/',views.query, name="query"),
     path('upload/', views.upload, name='upload'),
     path('upload/uploaded/', views.uploaded, name='uploaded'),
-    path('detail/', views.struct,name="detail")
+    path('detail/', views.struct,name="detail"),
+    path('sites/', views.sites, name='sites')
+
 ]
