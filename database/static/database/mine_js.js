@@ -51,11 +51,22 @@ function post_name(obj){
 }
 
 function post_info(){
-    $.post("sites/", {"element_name":name1,"latticeparameters":latticeparameters},function(str_response){
-        // var obj = window.open("about:blank");   
-        // obj.document.write(str_response)
-        var sites = eval(str_response);
-        alert(sites);
+    $.post("detail/", {"element_name":name1,"latticeparameters":latticeparameters},function(str_response){
+        var obj = window.open("about:blank");   
+        obj.document.write(str_response);
     });
-}        
-		
+
+    $.post("sites/", {"element_name":name1,"latticeparameters":latticeparameters},function(data){
+        var obj1 = eval(data);
+        var tab = $('#tab');
+        // tbody[0].innerHTML="";
+        $(obj1).each(function(index){
+            // var tr=$("<tr></tr>");
+            // tr.append("<td>" + (index + 1) + "</td>");
+            // tr.append("<td>" + name1 +"</td>");
+            // tr.append("<td>" + obj1[index][0] +"</td>");
+            // tr.append("<td>" + obj1[index][1] +"</td>");
+            // tbody2.append(tr);
+            tab.append("<tr><td>"+(index+1)+"/<td><td>"+name1+"</td><td>"+name1+"</td><td>"+name1+"</td></tr>");
+        }
+        )})}
