@@ -42,6 +42,9 @@ function post_name(obj){
         tr.append("<td>" + obj1[3][1] +"</td>");
         tr.append("<td>" + "cubic" +"</td>");
         tr.append("<td><buttom onclick='post_info()'><span class='glyphicon glyphicon-chevron-right'></span></buttom></td>");
+        // tr.append("<td>< a href='detail/Ac/5.3111,5.3111,5.3111,90,90,90'><span class='glyphicon glyphicon-chevron-right'></span></ a></td>");
+        // tr.append("<td>< a href= "+name1+"&para="+parameters[index]+"><span class='glyphicon glyphicon-chevron-right'></span></ a></td>");
+        // tr.append("<td>< a  href='detail/{{name1}}/{{parameters[index]}}'><span class='glyphicon glyphicon-chevron-right'></span></ a></td>");
         tbody.append(tr);
     });
 
@@ -51,10 +54,15 @@ function post_name(obj){
 }
 
 function post_info(){
-    $.post("detail/", {"element_name":name1,"latticeparameters":latticeparameters},function(str_response){
-        var obj = window.open("about:blank");   
-        obj.document.write(str_response);
-    });
+    $.post("detail/", {"element_name":name1,"latticeparameters":latticeparameters},
+        function(){
+            alert("hello");
+        }
+    // ,function(str_response){
+    //     var obj = window.open("about:blank");   
+    //     obj.document.write(str_response);
+    // }
+    );
 
     $.post("sites/", {"element_name":name1,"latticeparameters":latticeparameters},function(data){
         var obj1 = eval(data);
@@ -70,3 +78,9 @@ function post_info(){
             tab.append("<tr><td>"+(index+1)+"/<td><td>"+name1+"</td><td>"+name1+"</td><td>"+name1+"</td></tr>");
         }
         )})}
+function test(){
+    $.get("get_GeometryOptimization/",function(date){
+
+    }
+    )
+}
